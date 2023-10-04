@@ -26,7 +26,6 @@ const output = getInput()
     .reduce((acc, amount) => {
         acc[0] += amount[0];
         acc[1] += amount[1];
-
         return acc;
     }, [0, 0]);
 
