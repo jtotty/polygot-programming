@@ -8,11 +8,13 @@ specifiers:
   typescript: ^5.2.2
 
 dependencies:
-  '@types/command-line-args': 5.2.1
-  '@types/node': 20.8.2
   command-line-args: 5.2.1
   ts-node: 10.9.1_32qqpmfgecqpvkyl7rycgohfkq
   typescript: 5.2.2
+
+devDependencies:
+  '@types/command-line-args': 5.2.1
+  '@types/node': 20.8.2
 
 packages:
 
@@ -57,11 +59,10 @@ packages:
 
   /@types/command-line-args/5.2.1:
     resolution: {integrity: sha512-U2OcmS2tj36Yceu+mRuPyUV0ILfau/h5onStcSCzqTENsq0sBiAp2TmaXu1k8fY4McLcPKSYl9FRzn2hx5bI+w==}
-    dev: false
+    dev: true
 
   /@types/node/20.8.2:
     resolution: {integrity: sha512-Vvycsc9FQdwhxE3y3DzeIxuEJbWGDsnrxvMADzTDF/lcdR9/K+AQIeAghTQsHtotg/q0j3WEOYS/jQgSdWue3w==}
-    dev: false
 
   /acorn-walk/8.2.0:
     resolution: {integrity: sha512-k+iyHEuPgSw6SbuDpGQM+06HQUa04DZ3o+F6CSzXMvvI5KMvnaEqXe+YVe555R9nn6GPt404fos4wcgpw12SDA==}

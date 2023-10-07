@@ -2,13 +2,13 @@ package projector
 
 import "github.com/hellflame/argparse"
 
-type ProjecterOptions struct {
+type Options struct {
 	Args   []string
 	Config string
 	Pwd    string
 }
 
-func GetOpts() (*ProjecterOptions, error) {
+func GetOptions() (*Options, error) {
 	parser := argparse.NewParser("projector", "gets all the values", &argparse.ParserConfig{
 		DisableDefaultShowHelp: true,
 	})
@@ -34,7 +34,7 @@ func GetOpts() (*ProjecterOptions, error) {
 		return nil, err
 	}
 
-	return &ProjecterOptions{
+	return &Options{
 		Args:   *args,
 		Config: *config,
 		Pwd:    *pwd,

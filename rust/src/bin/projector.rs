@@ -1,5 +1,5 @@
 use clap::Parser;
-use rust::opts::Options;
+use rust::options::Options;
 
 fn main() {
     let opts = Options::parse();

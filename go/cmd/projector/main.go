@@ -8,10 +8,15 @@ import (
 )
 
 func main() {
-	opts, err := projector.GetOpts()
+	options, err := projector.GetOptions()
 	if err != nil {
 		log.Fatalf("unable to get options %v", err)
 	}
 
-	fmt.Printf("opts: %+v", opts)
+	config, err := projector.NewConfig(options)
+	if err != nil {
+		log.Fatalf("unable to get config %v", err)
+	}
+
+	fmt.Printf("config: %+v", config)
 }
