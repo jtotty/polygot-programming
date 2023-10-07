@@ -1,4 +1,4 @@
-import cli from "command-line-args";
+import cli from 'command-line-args';
 
 export type Options = {
     args?: string[],
@@ -9,17 +9,17 @@ export type Options = {
 export default function getOpts(): Options {
     return cli([
         {
-            name: "args",
+            name: 'args',
             defaultOption: true,
             multiple: true,
             type: String,
         }, {
-            name: "config",
-            alias: "c",
+            name: 'config',
+            alias: 'c',
             type: String,
         }, {
-            name: "pwd",
-            alias: "p",
+            name: 'pwd',
+            alias: 'p',
             type: String,
         },
     ]) as Options;

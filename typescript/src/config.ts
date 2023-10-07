@@ -1,5 +1,5 @@
-import path from "path";
-import { Options } from "./opts";
+import path from 'path';
+import { Options } from './opts';
 
 export enum Operation {
     Print,
@@ -16,8 +16,8 @@ export type Config = {
 
 function getOperation(options: Options): Operation {
     switch (options.args?.[0]) {
-        case "add": return Operation.Add;
-        case "remove": return Operation.Remove;
+        case 'add': return Operation.Add;
+        case 'remove': return Operation.Remove;
         default: return Operation.Print;
     }
 }
@@ -60,19 +60,19 @@ function getConfig(options: Options): string {
         return options.config;
     }
 
-    const WIN_HOME = process.env["HOME"];
-    const UBUNTU_HOME = process.env["XDG_CONFIG_HOME"];
+    const WIN_HOME = process.env['HOME'];
+    const UBUNTU_HOME = process.env['XDG_CONFIG_HOME'];
     const location =  UBUNTU_HOME || WIN_HOME;
 
     if (!location) {
-        throw new Error("Unable to determine config location");
+        throw new Error('Unable to determine config location');
     }
 
     if (location === WIN_HOME) {
-        return path.join(location, ".projector.json");
+        return path.join(location, '.projector.json');
     }
 
-    return path.join(location, "projector", "projector.json");
+    return path.join(location, 'projector', 'projector.json');
 }
 
 function getPwd(options: Options): string {
@@ -83,7 +83,7 @@ function getPwd(options: Options): string {
     return process.cwd();
 }
 
-export default function config(options: Options): Config {
+export default function setupConfig(options: Options): Config {
     return {
         args: getArgs(options),
         operation: getOperation(options),
