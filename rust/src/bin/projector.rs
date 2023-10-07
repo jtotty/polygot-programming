@@ -1,7 +1,11 @@
 use clap::Parser;
-use rust::options::Options;
+use rust::{config::Config, options::Options};
 
-fn main() {
-    let opts = Options::parse();
-    println!("{:?}", opts)
+use anyhow::Result;
+
+fn main() -> Result<()> {
+    let opts: Config = Options::parse().try_into()?;
+    println!("{:?}", opts);
+
+    return Ok(());
 }
