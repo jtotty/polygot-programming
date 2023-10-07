@@ -27,7 +27,7 @@ impl TryFrom<Options> for Config {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum Operation {
     Print(Option<String>),
     Add(String, String),
@@ -90,7 +90,7 @@ fn get_config(config: Option<PathBuf>) -> Result<PathBuf> {
         return Ok(value);
     }
 
-    let location = std::env::var("HOME").context("Unable to get HOME directory")?;
+    let location = std::env::var("USERPROFILE").context("Unable to get HOME directory")?;
     let mut location = PathBuf::from(location);
 
     location.push(".projector.json");
@@ -104,4 +104,72 @@ fn get_pwd(pwd: Option<PathBuf>) -> Result<PathBuf> {
     }
 
     return Ok(std::env::current_dir().context("could not get current_dir")?);
+}
+
+#[cfg(test)]
+mod test {
+    use anyhow::Result;
+
+    use crate::{config::Operation, options::Options};
+
+    use super::Config;
+
+    #[test]
+    fn test_print_all() -> Result<()> {
+        let opts: Config = Options {
+            args: vec![],
+            pwd: None,
+            config: None,
+        }
+        .try_into()?;
+
+        assert_eq!(opts.operation, Operation::Print(None));
+        return Ok(());
+    }
+
+    #[test]
+    fn test_print_key() -> Result<()> {
+        let opts: Config = Options {
+            args: vec![String::from("foo")],
+            pwd: None,
+            config: None,
+        }
+        .try_into()?;
+
+        assert_eq!(opts.operation, Operation::Print(Some(String::from("foo"))));
+        return Ok(());
+    }
+
+    #[test]
+    fn test_add_key_value() -> Result<()> {
+        let opts: Config = Options {
+            args: vec![
+                String::from("add"),
+                String::from("foo"),
+                String::from("bar"),
+            ],
+            pwd: None,
+            config: None,
+        }
+        .try_into()?;
+
+        assert_eq!(
+            opts.operation,
+            Operation::Add(String::from("foo"), String::from("bar"))
+        );
+        return Ok(());
+    }
+
+    #[test]
+    fn test_remove_key() -> Result<()> {
+        let opts: Config = Options {
+            args: vec![String::from("remove"), String::from("foo")],
+            pwd: None,
+            config: None,
+        }
+        .try_into()?;
+
+        assert_eq!(opts.operation, Operation::Remove(String::from("foo")));
+        return Ok(());
+    }
 }
