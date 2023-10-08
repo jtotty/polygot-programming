@@ -6,7 +6,7 @@ export type Options = {
     config?: string,
 }
 
-export default function getOpts(): Options {
+export default function getOptions(): Options {
     return cli([
         {
             name: 'args',

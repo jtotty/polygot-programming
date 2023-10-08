@@ -1,5 +1,6 @@
 import path from 'path';
 import { Options } from './opts';
+import fs from 'fs';
 
 export enum Operation {
     Print,
@@ -59,20 +60,18 @@ function getConfig(options: Options): string {
     if (options.config) {
         return options.config;
     }
-
-    const WIN_HOME = process.env['HOME'];
-    const UBUNTU_HOME = process.env['XDG_CONFIG_HOME'];
-    const location =  UBUNTU_HOME || WIN_HOME;
+    const location =  process.env['HOME'] || process.env['XDG_CONFIG_HOME'];
 
     if (!location) {
         throw new Error('Unable to determine config location');
     }
 
-    if (location === WIN_HOME) {
-        return path.join(location, '.projector.json');
+    const projectorFolder = path.join(location, 'projector');
+    if (!fs.existsSync(projectorFolder)) {
+        fs.mkdirSync(projectorFolder);
     }
 
-    return path.join(location, 'projector', 'projector.json');
+    return path.join(location, 'projector', '.projector.json');
 }
 
 function getPwd(options: Options): string {

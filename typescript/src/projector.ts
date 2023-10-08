@@ -62,6 +62,7 @@ export default class Projector {
     }
 
     setValue(key: string, value: string) {
+        console.log(this.#config.pwd);
         let dir = this.#data.projector[this.#config.pwd];
         if (!dir) {
             dir = this.#data.projector[this.#config.pwd] = {};
@@ -75,6 +76,15 @@ export default class Projector {
         if (dir) {
             delete dir[key];
         }
+    }
+
+    save() {
+        const configPath = path.dirname(this.#config.config);
+        if (fs.existsSync(configPath)) {
+            fs.mkdirSync(configPath, { recursive: true });
+        }
+
+        fs.writeFileSync(this.#config.config, JSON.stringify(this.#data));
     }
 
     static fromConfig(config: Config): Projector {
