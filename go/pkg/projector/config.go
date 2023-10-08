@@ -77,7 +77,7 @@ func getConfig(options *Options) (string, error) {
 		return "", err
 	}
 
-	return path.Join(configDir, ".projector.json"), nil
+	return path.Join(configDir, "projector", "projector-go.json"), nil
 }
 
 func getPwd(options *Options) (string, error) {

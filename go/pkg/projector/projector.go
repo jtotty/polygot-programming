@@ -25,7 +25,6 @@ func CreateProjector(config *Config, data *Data) *Projector {
 func (p *Projector) GetValue(key string) (string, bool) {
 	curr := p.config.Pwd
 	prev := ""
-
 	out := ""
 	found := false
 
@@ -86,6 +85,25 @@ func (p *Projector) RemoveValue(key string) {
 	if dir, ok := p.data.Projector[pwd]; ok {
 		delete(dir, key)
 	}
+}
+
+func (p *Projector) Save() error {
+	dir := path.Dir(p.config.Config)
+
+	if _, err := os.Stat(dir); os.IsNotExist(err) {
+		err = os.MkdirAll(dir, 0755)
+		if err != nil {
+			return err
+		}
+	}
+
+	jsonData, err := json.Marshal(p.data)
+	if err != nil {
+		return err
+	}
+
+	os.WriteFile(p.config.Config, jsonData, 0755)
+	return nil
 }
 
 func defaultProjector(config *Config) *Projector {
