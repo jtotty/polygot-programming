@@ -90,12 +90,23 @@ fn get_config(config: Option<PathBuf>) -> Result<PathBuf> {
         return Ok(value);
     }
 
-    let location = std::env::var("USERPROFILE").context("Unable to get HOME directory")?;
-    let mut location = PathBuf::from(location);
+    // Linux
+    if let Ok(home) = std::env::var("XDG_CONFIG_HOME") {
+        let mut home = PathBuf::from(home);
+        home.push("projector");
+        home.push("projector.json");
+        return Ok(home);
+    }
 
-    location.push(".projector.json");
+    // Windows
+    if let Ok(home) = std::env::var("USERPROFILE") {
+        let mut home = PathBuf::from(home);
+        home.push("projector");
+        home.push("projector.json");
+        return Ok(home);
+    }
 
-    return Ok(location);
+    return Err(anyhow!("Unable to find config home location"));
 }
 
 fn get_pwd(pwd: Option<PathBuf>) -> Result<PathBuf> {
