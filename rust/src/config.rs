@@ -94,7 +94,7 @@ fn get_config(config: Option<PathBuf>) -> Result<PathBuf> {
     if let Ok(home) = std::env::var("XDG_CONFIG_HOME") {
         let mut home = PathBuf::from(home);
         home.push("projector");
-        home.push("projector.json");
+        home.push("projector-rust.json");
         return Ok(home);
     }
 
@@ -102,7 +102,7 @@ fn get_config(config: Option<PathBuf>) -> Result<PathBuf> {
     if let Ok(home) = std::env::var("USERPROFILE") {
         let mut home = PathBuf::from(home);
         home.push("projector");
-        home.push("projector.json");
+        home.push("projector-rust.json");
         return Ok(home);
     }
 
